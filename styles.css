@@ -183,6 +183,29 @@ body {
     font-size: 0.875rem;
 }
 
+.landing-footer p {
+    margin-bottom: var(--spacing-md);
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md) var(--spacing-lg);
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-link {
+    color: var(--color-text-primary);
+    text-decoration: underline;
+    font-size: 0.875rem;
+    transition: color var(--transition-speed) ease;
+}
+
+.footer-link:hover {
+    color: var(--color-text-secondary);
+}
+
 /* ==========================================
    LEGAL PAGES
    ========================================== */
