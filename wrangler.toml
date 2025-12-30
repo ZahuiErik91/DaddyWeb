@@ -1,0 +1,6 @@
+name = "daddyweb"
+compatibility_date = "2025-12-30"
+
+[assets]
+directory = "."
+
