@@ -55,6 +55,17 @@
                     <li><strong>Data Minimization:</strong> We send only the conversation history necessary for the immediate context.</li>
                 </ul>
 
+                <h3>4-B. Human Review & The "Airlock" System (Golden Dataset)</h3>
+                <p>
+                    While most interactions are fully automated, we employ a "Human-in-the-Loop" system to improve clinical safety.
+                </p>
+                <ul>
+                    <li><strong>The Trigger:</strong> If you flag a response as unhelpful, unsafe, or if our automated safety systems detect a complex clinical scenario, the interaction may be queued for review.</li>
+                    <li><strong>The Process (The Airlock):</strong> A verified clinical reviewer (Therapist) may view an <strong>anonymized summary</strong> of your situation. They DO NOT see your raw chat logs, name, or personal identifiers.</li>
+                    <li><strong>The Outcome:</strong> The reviewer may rewrite the AI's response in real-time to provide better support.</li>
+                    <li><strong>Training Data:</strong> The corrected response and the anonymized scenario are added to our "Golden Dataset" to train future versions of our AI. By using the App, you acknowledge that your anonymized interaction patterns contribute to this medical training data.</li>
+                </ul>
+
                 <h2>5. Data Storage & Security</h2>
                 <ul>
                     <li><strong>Database:</strong> User data is stored securely using <strong>Supabase</strong> (servers located in the EU/US).</li>
@@ -63,12 +74,22 @@
                 </ul>
 
                 <h2>6. Data Sharing</h2>
-                <p>We do not sell your data. We share data only with infrastructure providers:</p>
+                <p>We do not sell your <strong>personal identifiable data</strong>. We share data with the following parties:</p>
+                
+                <h3>Infrastructure Providers:</h3>
                 <ol>
                     <li><strong>OpenRouter:</strong> For AI text generation.</li>
                     <li><strong>Supabase:</strong> For database hosting and authentication.</li>
                     <li><strong>Stripe/Apple:</strong> For payment processing.</li>
                 </ol>
+
+                <h3>Research & Commercial Datasets:</h3>
+                <p>
+                    We may aggregate and strictly anonymize data (stripping all personal identifiers) to create clinical datasets. 
+                    These <strong>anonymous</strong> datasets may be licensed or sold to research institutions or healthcare companies 
+                    for the purpose of advancing mental health AI. These datasets contain no information that could reasonably 
+                    be used to identify you.
+                </p>
 
                 <h2>7. Your Rights (GDPR)</h2>
                 <p>You have the right to:</p>
