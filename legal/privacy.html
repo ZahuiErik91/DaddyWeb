@@ -40,20 +40,67 @@
                 </p>
 
                 <h2>3. Data We Collect</h2>
+                
+                <h3>3.1 Sensitive Health Data</h3>
+                <p>
+                    <strong>Special Category Data:</strong> The contents of your conversations with DaddyFreud, including 
+                    discussions about mental health, addiction recovery, and emotional wellbeing, are classified as 
+                    <strong>Sensitive Personal Data</strong> under GDPR Article 9 and similar regulations. We collect 
+                    this data only with your explicit, opt-in consent for the purpose of providing the therapy support service.
+                </p>
+
+                <h3>3.2 Other Data Types</h3>
                 <ul>
-                    <li><strong>Voluntary Data:</strong> Chat logs, journal entries, sobriety clocks, mood ratings.</li>
+                    <li><strong>Account Information:</strong> Email address, username, password (encrypted).</li>
+                    <li><strong>Usage Data:</strong> Chat logs, journal entries, sobriety clocks, mood ratings.</li>
                     <li><strong>Identity Verification Data:</strong> If you apply for "Therapist Mode," we may collect proof of ID or professional licensure via secure third-party processors (e.g., Stripe Identity). We do not store raw ID images after verification.</li>
-                    <li><strong>Technical Data:</strong> IP address, device model, crash logs (via Supabase/Apple).</li>
+                    <li><strong>Technical Data:</strong> IP address, device model, browser type, crash logs (via Supabase/Apple).</li>
                 </ul>
 
-                <h2>4. How We Use AI (Third-Party Processing)</h2>
+                <h3>3.3 Biometric Data Exclusion (EU AI Act Compliance)</h3>
+                <div class="warning-box">
+                    <p>
+                        <strong>Important Clarification:</strong> DaddyFreud utilizes <strong>text-based Natural Language 
+                        Processing (NLP)</strong> to understand sentiment and emotional context from the semantic content 
+                        of your messages.
+                    </p>
+                    <p>
+                        <strong>We DO NOT collect, store, or process:</strong>
+                    </p>
+                    <ul>
+                        <li>Voiceprints or voice biometric templates</li>
+                        <li>Facial geometry or facial recognition data</li>
+                        <li>Keystroke dynamics or typing rhythm patterns</li>
+                        <li>Any other biometric identifiers for emotion recognition</li>
+                    </ul>
+                    <p>
+                        Our AI analyzes the <strong>words you type</strong>, not biological or behavioral characteristics. 
+                        This approach ensures we are not classified as a "biometric emotion recognition system" under 
+                        the EU AI Act.
+                    </p>
+                </div>
+
+                <h2>4. How We Use Your Data</h2>
+                
+                <h3>4.1 Third-Party AI Processing</h3>
                 <p>
-                    To function, the "AI Coach" sends your anonymized chat text to <strong>OpenRouter</strong> 
+                    To function, the AI sends your chat text to <strong>OpenRouter</strong> 
                     (which routes to models like Anthropic Claude, OpenAI GPT, or Google Gemini).
                 </p>
                 <ul>
-                    <li><strong>No Training:</strong> We have configured our API settings to request that these providers <strong>DO NOT</strong> use your data to train their models. However, they may retain logs for up to 30 days for abuse monitoring.</li>
+                    <li><strong>No Training by Third Parties:</strong> We have configured our API settings to request that these providers <strong>DO NOT</strong> use your data to train their models. However, they may retain logs for up to 30 days for abuse monitoring.</li>
                     <li><strong>Data Minimization:</strong> We send only the conversation history necessary for the immediate context.</li>
+                </ul>
+
+                <h3>4.2 AI Model Training & Improvement (Opt-In Only)</h3>
+                <p><strong>Default State:</strong> Your chat logs are <strong>NOT</strong> used to train our AI models by default. They are used solely to generate responses in your active session.</p>
+                
+                <p><strong>Opt-In for Service Improvement:</strong> You may choose to opt-in to help improve DaddyFreud. If you do:</p>
+                <ul>
+                    <li>Your conversation logs will be <strong>de-identified</strong> (all personal identifiers stripped)</li>
+                    <li>Anonymized data may be used to fine-tune our models for better accuracy and empathy</li>
+                    <li>You can revoke this consent at any time in Settings</li>
+                    <li>Upon revocation, your data will be removed from future training sets (though it cannot be removed from models already trained)</li>
                 </ul>
 
                 <h3>4-B. Quality Improvement & Human Review</h3>
