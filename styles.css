@@ -1,0 +1,419 @@
+/* ==========================================
+   CUSTOM FONTS
+   ========================================== */
+
+@font-face {
+    font-family: 'Slackey';
+    src: url('fonts/Slackey-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ==========================================
+   CSS VARIABLES & RESET
+   ========================================== */
+
+:root {
+    --color-bg: #0a0a0a;
+    --color-surface: #1a1a1a;
+    --color-border: #333333;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #a0a0a0;
+    --color-text-muted: #666666;
+    --color-accent: #ffffff;
+    --color-hover: #2a2a2a;
+    
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    --font-logo: 'Slackey', 'JetBrains Mono', 'Courier New', monospace;
+    
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    --spacing-2xl: 4rem;
+    
+    --border-radius: 8px;
+    --border-width: 1px;
+    
+    --transition-speed: 0.2s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================
+   CONTAINER & LAYOUT
+   ========================================== */
+
+.container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+}
+
+/* ==========================================
+   LANDING PAGE
+   ========================================== */
+
+.landing {
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+}
+
+.hero {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.hero-title {
+    font-family: var(--font-logo);
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: normal;
+    letter-spacing: 0.02em;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+}
+
+.hero-subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 400;
+}
+
+/* ==========================================
+   CARD GRID
+   ========================================== */
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.card {
+    background-color: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    text-decoration: none;
+    color: var(--color-text-primary);
+    transition: all var(--transition-speed) ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transition: transform var(--transition-speed) ease;
+}
+
+.card:hover {
+    background-color: var(--color-hover);
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+}
+
+.card:hover::before {
+    transform: scaleX(1);
+}
+
+.card-icon {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-sm);
+    opacity: 0.9;
+}
+
+.card-title {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: -0.01em;
+}
+
+.card-description {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+.landing-footer {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: var(--border-width) solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+}
+
+/* ==========================================
+   LEGAL PAGES
+   ========================================== */
+
+.document-container {
+    width: 100%;
+    min-height: 100vh;
+    padding: var(--spacing-xl) var(--spacing-md);
+}
+
+.document {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-xl);
+    transition: color var(--transition-speed) ease;
+    font-weight: 500;
+}
+
+.back-link:hover {
+    color: var(--color-text-primary);
+}
+
+.document-title {
+    font-family: var(--font-mono);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: -0.02em;
+}
+
+.document-meta {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.document-content {
+    text-align: left;
+}
+
+.document-content h2 {
+    font-family: var(--font-body);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
+    letter-spacing: -0.01em;
+}
+
+.document-content h3 {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+}
+
+.document-content p {
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-secondary);
+    line-height: 1.8;
+}
+
+.document-content ul,
+.document-content ol {
+    margin-bottom: var(--spacing-md);
+    padding-left: var(--spacing-lg);
+    color: var(--color-text-secondary);
+}
+
+.document-content li {
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.8;
+}
+
+.document-content strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+/* ==========================================
+   SIGNATURE SECTION
+   ========================================== */
+
+.signature-section {
+    margin-top: var(--spacing-2xl);
+    padding: var(--spacing-lg);
+    background-color: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+}
+
+.signature-title {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.form-input {
+    width: 100%;
+    padding: var(--spacing-sm);
+    background-color: var(--color-bg);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: border-color var(--transition-speed) ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+}
+
+.signature-box {
+    width: 100%;
+    height: 120px;
+    background-color: var(--color-bg);
+    border: 2px dashed var(--color-border);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.signature-box:hover {
+    border-color: var(--color-text-secondary);
+    color: var(--color-text-secondary);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-md);
+    background-color: var(--color-bg);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--border-radius);
+}
+
+.checkbox-input {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: var(--color-accent);
+}
+
+.checkbox-label {
+    flex: 1;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+}
+
+.attestation-text {
+    color: var(--color-text-primary);
+    font-weight: 500;
+}
+
+.submit-note {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm);
+    background-color: var(--color-bg);
+    border-left: 3px solid var(--color-accent);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 768px) {
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .document-container {
+        padding: var(--spacing-lg) var(--spacing-sm);
+    }
+    
+    .signature-section {
+        padding: var(--spacing-md);
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .card {
+        padding: var(--spacing-md);
+    }
+}
+
