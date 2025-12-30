@@ -451,6 +451,88 @@ body {
 }
 
 /* ==========================================
+   COOKIE CONSENT BANNER
+   ========================================== */
+
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--color-surface);
+    border-top: var(--border-width) solid var(--color-border);
+    padding: var(--spacing-md) var(--spacing-lg);
+    z-index: 9999;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.cookie-banner-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+}
+
+.cookie-banner-text {
+    flex: 1;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+.cookie-link {
+    color: var(--color-text-primary);
+    text-decoration: underline;
+    transition: color var(--transition-speed) ease;
+}
+
+.cookie-link:hover {
+    color: var(--color-text-secondary);
+}
+
+.cookie-banner-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-shrink: 0;
+}
+
+.cookie-btn {
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--border-radius);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    border: var(--border-width) solid var(--color-border);
+    white-space: nowrap;
+}
+
+.cookie-btn-secondary {
+    background-color: transparent;
+    color: var(--color-text-secondary);
+}
+
+.cookie-btn-secondary:hover {
+    background-color: var(--color-hover);
+    color: var(--color-text-primary);
+}
+
+.cookie-btn-primary {
+    background-color: var(--color-text-primary);
+    color: var(--color-bg);
+    border-color: var(--color-text-primary);
+}
+
+.cookie-btn-primary:hover {
+    background-color: var(--color-text-secondary);
+    border-color: var(--color-text-secondary);
+}
+
+/* ==========================================
    RESPONSIVE
    ========================================== */
 
@@ -465,6 +547,19 @@ body {
     
     .signature-section {
         padding: var(--spacing-md);
+    }
+    
+    .cookie-banner-content {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .cookie-banner-actions {
+        width: 100%;
+    }
+    
+    .cookie-btn {
+        flex: 1;
     }
 }
 
