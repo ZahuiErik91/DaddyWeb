@@ -14,6 +14,9 @@
     <script src="clinical-grid.js" defer></script>
 </head>
 <body class="light-theme">
+    <!-- Clinical Grid Background -->
+    <canvas id="clinical-grid-canvas" class="clinical-grid-canvas"></canvas>
+
     <header class="site-header">
         <h1 class="logo">DaddyFreud</h1>
     </header>
@@ -25,27 +28,6 @@
             <p class="tagline-sub">Radical honesty. Clinical precision.</p>
         </div>
     </main>
-
-    <!-- Clinical Grid Interactive Section -->
-    <section class="clinical-grid-section">
-        <canvas id="clinical-grid-canvas" class="clinical-grid-canvas"></canvas>
-        
-        <!-- Branding Overlay -->
-        <div class="clinical-overlay">
-            <h2 class="clinical-title">CLINICAL_ENGINE</h2>
-            <div class="clinical-stats">
-                <div class="clinical-stat">
-                    <span class="status-indicator">
-                        <span class="status-ping"></span>
-                        <span class="status-dot"></span>
-                    </span>
-                    <span>Memory Context :: Active</span>
-                </div>
-                <div class="clinical-stat">LOCAL_POLLING: 50ms</div>
-                <div class="clinical-stat">ENCRYPTION: AES-256 (GCM)</div>
-            </div>
-        </div>
-    </section>
 
     <footer class="site-footer">
         <nav class="footer-links">
