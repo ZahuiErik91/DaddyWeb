@@ -176,6 +176,15 @@ body {
     max-width: 800px;
 }
 
+.hero-image {
+    width: clamp(200px, 40vw, 400px);
+    height: auto;
+    margin-bottom: var(--spacing-xl);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .tagline {
     font-size: clamp(2rem, 5vw, 3.5rem);
     font-weight: 600;
@@ -659,6 +668,11 @@ body {
     
     .logo {
         font-size: 1.25rem;
+    }
+    
+    .hero-image {
+        width: clamp(150px, 60vw, 250px);
+        margin-bottom: var(--spacing-lg);
     }
     
     .tagline {
