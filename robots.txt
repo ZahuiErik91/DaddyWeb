@@ -1,0 +1,10 @@
+# robots.txt for DaddyFreud
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://daddyfreud.com/sitemap.xml
+
+# Crawl-delay (optional, adjust if needed)
+Crawl-delay: 1
+
