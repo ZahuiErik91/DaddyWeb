@@ -44,10 +44,10 @@ class ClinicalGrid {
   }
   
   init() {
-    // Event listeners
+    // Event listeners - use window for mouse tracking since canvas is behind content
     window.addEventListener('resize', this.handleResize);
-    this.canvas.addEventListener('mousemove', this.handleMouseMove);
-    this.canvas.addEventListener('mouseleave', this.handleMouseLeave);
+    window.addEventListener('mousemove', this.handleMouseMove);
+    window.addEventListener('mouseleave', this.handleMouseLeave);
     
     // Initial setup
     setTimeout(() => this.handleResize(), 10);
@@ -94,10 +94,10 @@ class ClinicalGrid {
   }
   
   handleMouseMove(e) {
-    const rect = this.canvas.getBoundingClientRect();
+    // Use clientX/Y directly since canvas covers full viewport at fixed position
     this.targetMousePos = {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top
+      x: e.clientX,
+      y: e.clientY
     };
   }
   
@@ -156,8 +156,8 @@ class ClinicalGrid {
   
   destroy() {
     window.removeEventListener('resize', this.handleResize);
-    this.canvas.removeEventListener('mousemove', this.handleMouseMove);
-    this.canvas.removeEventListener('mouseleave', this.handleMouseLeave);
+    window.removeEventListener('mousemove', this.handleMouseMove);
+    window.removeEventListener('mouseleave', this.handleMouseLeave);
     cancelAnimationFrame(this.animationFrameId);
   }
 }
