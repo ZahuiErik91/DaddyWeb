@@ -66,12 +66,15 @@ class ClinicalGrid {
         const xPos = x * this.COL_WIDTH + xOffset - 20;
         const yPos = y * this.ROW_HEIGHT + this.ROW_HEIGHT;
         
-        this.grid.push({
-          x: xPos,
-          y: yPos,
-          text: this.DATA_TOKENS[Math.floor(Math.random() * this.DATA_TOKENS.length)],
-          phase: Math.random() * Math.PI * 2
-        });
+        // Only add cells that are above the footer boundary
+        if (!this.footerBoundary || yPos < this.footerBoundary) {
+          this.grid.push({
+            x: xPos,
+            y: yPos,
+            text: this.DATA_TOKENS[Math.floor(Math.random() * this.DATA_TOKENS.length)],
+            phase: Math.random() * Math.PI * 2
+          });
+        }
       }
     }
   }
@@ -83,12 +86,19 @@ class ClinicalGrid {
     const width = window.innerWidth;
     const height = window.innerHeight;
     
+    // Calculate footer height to exclude from canvas rendering
+    const footer = document.querySelector('.site-footer');
+    const footerHeight = footer ? footer.offsetHeight : 0;
+    
     this.canvas.width = width * dpr;
     this.canvas.height = height * dpr;
     
     this.ctx.scale(dpr, dpr);
     this.canvas.style.width = `${width}px`;
     this.canvas.style.height = `${height}px`;
+    
+    // Store footer boundary for render clipping
+    this.footerBoundary = height - footerHeight;
     
     this.initGrid();
   }
@@ -113,7 +123,7 @@ class ClinicalGrid {
     this.currentMousePos.x += dx * this.LERP_FACTOR;
     this.currentMousePos.y += dy * this.LERP_FACTOR;
     
-    // Clear (white background)
+    // Clear entire canvas with light background
     this.ctx.fillStyle = '#f5f5f7';
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     
