@@ -66,7 +66,14 @@
                     our secure database (Supabase) tied to your anonymous ID.
                 </p>
 
-                <h3>1.5 Technical Data</h3>
+                <h3>1.5 Conversation State Data</h3>
+                <p>
+                    We store local data on your device indicating your progression through the App's conversation logic 
+                    (e.g., "<strong>Session Count</strong>," "<strong>Distress History</strong>," "<strong>Current State</strong>"). 
+                    This data allows the AI to remember context between sessions.
+                </p>
+
+                <h3>1.6 Technical Data</h3>
                 <ul>
                     <li>Device model and operating system version</li>
                     <li>Crash logs (via Supabase/Apple/Google)</li>
@@ -109,6 +116,16 @@
                     You can opt-out of data training in the App Settings. If you opt-out, your chats will only be used 
                     for generating immediate responses, not for improving future AI models.
                 </p>
+
+                <h3>2.3 Automated Safety Protocols</h3>
+                <p>
+                    We use a local algorithm ("<strong>Clinical Engine</strong>") to scan message text for specific 
+                    keywords related to self-harm or violence.
+                </p>
+                <ul>
+                    <li><strong>Effect:</strong> If these keywords are detected, the App's processing logic changes to prioritize safety resources over conversation.</li>
+                    <li><strong>No Human Review:</strong> This detection happens locally on your device or via automated script; <strong>no human reads your messages in real-time</strong> to trigger this.</li>
+                </ul>
 
 
                 <h2>3. Data Deletion</h2>
