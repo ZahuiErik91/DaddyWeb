@@ -13,8 +13,9 @@ class ClinicalGrid {
     
     // Visual configuration
     this.FONT_SIZE = 11;
-    this.COL_WIDTH = 80;
-    this.ROW_HEIGHT = 22;
+    this.COL_WIDTH = 120;  // Increased for better spacing
+    this.ROW_HEIGHT = 30;  // Increased for better spacing
+    this.MIN_DISTANCE = 60;  // Minimum distance between text centers
     this.FLASHLIGHT_RADIUS = 300;
     this.LERP_FACTOR = 0.08;
     
@@ -59,21 +60,28 @@ class ClinicalGrid {
     const cols = Math.ceil(this.canvas.width / this.COL_WIDTH) + 1;
     const rows = Math.ceil(this.canvas.height / this.ROW_HEIGHT);
     
+    // Measure text widths for collision detection
+    this.ctx.font = `500 ${this.FONT_SIZE}px "Menlo", "Monaco", "Courier New", monospace`;
+    
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
-        // Staggered grid (honeycomb)
+        // Staggered grid (honeycomb) with extra spacing
         const xOffset = (y % 2 === 0) ? 0 : this.COL_WIDTH / 2;
-        const xPos = x * this.COL_WIDTH + xOffset - 20;
+        const xPos = x * this.COL_WIDTH + xOffset;
         const yPos = y * this.ROW_HEIGHT + this.ROW_HEIGHT;
         
         // Only add cells that are above the footer boundary
         if (!this.footerBoundary || yPos < this.footerBoundary) {
+          const text = this.DATA_TOKENS[Math.floor(Math.random() * this.DATA_TOKENS.length)];
+          const textWidth = this.ctx.measureText(text).width;
+          
           this.grid.push({
             x: xPos,
             y: yPos,
             baseX: xPos,  // Store original position
             baseY: yPos,
-            text: this.DATA_TOKENS[Math.floor(Math.random() * this.DATA_TOKENS.length)],
+            text: text,
+            textWidth: textWidth,  // Store measured width
             phase: Math.random() * Math.PI * 2,
             driftPhaseX: Math.random() * Math.PI * 2,  // Autonomous drift
             driftPhaseY: Math.random() * Math.PI * 2,
@@ -140,10 +148,35 @@ class ClinicalGrid {
     const time = Date.now() / 1500;
     const breathTime = Date.now() / 3000;  // Slower breathing cycle
     
-    this.grid.forEach(cell => {
+    this.grid.forEach((cell, index) => {
       // AUTONOMOUS DRIFT - makes the grid "float" and move organically
-      const driftX = Math.sin(breathTime * 0.5 + cell.driftPhaseX) * 8;
-      const driftY = Math.cos(breathTime * 0.3 + cell.driftPhaseY) * 6;
+      let driftX = Math.sin(breathTime * 0.5 + cell.driftPhaseX) * 5;
+      let driftY = Math.cos(breathTime * 0.3 + cell.driftPhaseY) * 4;
+      
+      // COLLISION AVOIDANCE - check only nearby cells (within 150px range)
+      const checkRange = 150;
+      for (let i = Math.max(0, index - 10); i < Math.min(this.grid.length, index + 10); i++) {
+        if (i === index) continue;
+        
+        const other = this.grid[i];
+        
+        // Quick distance check using base positions first
+        const baseDx = cell.baseX - other.baseX;
+        const baseDy = cell.baseY - other.baseY;
+        if (Math.abs(baseDx) > checkRange || Math.abs(baseDy) > checkRange) continue;
+        
+        // Now check actual positions with drift
+        const dx = (cell.baseX + driftX) - other.x;
+        const dy = (cell.baseY + driftY) - other.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        // If cells are too close, reduce drift proportionally
+        if (distance < this.MIN_DISTANCE) {
+          const reduction = (distance / this.MIN_DISTANCE) * 0.6;
+          driftX *= reduction;
+          driftY *= reduction;
+        }
+      }
       
       // Apply drift to position
       cell.x = cell.baseX + driftX;
