@@ -71,8 +71,13 @@ class ClinicalGrid {
           this.grid.push({
             x: xPos,
             y: yPos,
+            baseX: xPos,  // Store original position
+            baseY: yPos,
             text: this.DATA_TOKENS[Math.floor(Math.random() * this.DATA_TOKENS.length)],
-            phase: Math.random() * Math.PI * 2
+            phase: Math.random() * Math.PI * 2,
+            driftPhaseX: Math.random() * Math.PI * 2,  // Autonomous drift
+            driftPhaseY: Math.random() * Math.PI * 2,
+            breathPhase: Math.random() * Math.PI * 2   // Individual breathing
           });
         }
       }
@@ -133,32 +138,51 @@ class ClinicalGrid {
     this.ctx.textBaseline = 'middle';
     
     const time = Date.now() / 1500;
+    const breathTime = Date.now() / 3000;  // Slower breathing cycle
     
     this.grid.forEach(cell => {
+      // AUTONOMOUS DRIFT - makes the grid "float" and move organically
+      const driftX = Math.sin(breathTime * 0.5 + cell.driftPhaseX) * 8;
+      const driftY = Math.cos(breathTime * 0.3 + cell.driftPhaseY) * 6;
+      
+      // Apply drift to position
+      cell.x = cell.baseX + driftX;
+      cell.y = cell.baseY + driftY;
+      
+      // BREATHING SCALE - text size pulses
+      const breathScale = 1 + Math.sin(breathTime + cell.breathPhase) * 0.15;
+      
       // Distance from flashlight
       const distX = cell.x - this.currentMousePos.x;
       const distY = cell.y - this.currentMousePos.y;
       const dist = Math.sqrt(distX * distX + distY * distY);
       
+      // Save context for scale transformation
+      this.ctx.save();
+      this.ctx.translate(cell.x, cell.y);
+      this.ctx.scale(breathScale, breathScale);
+      
       if (dist < this.FLASHLIGHT_RADIUS) {
         // Illuminated state
         const intensity = 1 - Math.pow(dist / this.FLASHLIGHT_RADIUS, 1.5);
         
-        // Rainbow gradient
-        const hue = (cell.x * 0.2 + time * 50) % 360;
-        const saturation = 80;
+        // Rainbow gradient with wave effect
+        const hue = (cell.baseX * 0.2 + time * 50 + cell.baseY * 0.1) % 360;
+        const saturation = 70 + Math.sin(breathTime + cell.phase) * 10;
         const lightness = 50 - (intensity * 10);
         
         this.ctx.fillStyle = `hsla(${hue}, ${saturation}%, ${lightness}%, ${intensity})`;
       } else {
         // Dormant state (breathing)
-        const breath = Math.sin(time + cell.phase);
-        const opacity = 0.05 + (breath + 1) * 0.05;
+        const breath = Math.sin(breathTime + cell.phase);
+        const opacity = 0.03 + (breath + 1) * 0.06;  // More dramatic breathing
         
         this.ctx.fillStyle = `rgba(100, 116, 139, ${opacity})`;
       }
       
-      this.ctx.fillText(cell.text, cell.x, cell.y);
+      // Draw at origin (0,0) since we translated
+      this.ctx.fillText(cell.text, 0, 0);
+      this.ctx.restore();
     });
     
     this.animationFrameId = requestAnimationFrame(this.render);
