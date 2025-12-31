@@ -7,17 +7,20 @@ class ClinicalGrid {
     this.ctx = this.canvas.getContext('2d');
     this.animationFrameId = null;
     
-    // Mouse tracking
+    // Mouse/Touch tracking
     this.targetMousePos = { x: -9999, y: -9999 };
     this.currentMousePos = { x: -9999, y: -9999 };
     
-    // Visual configuration
-    this.FONT_SIZE = 11;
-    this.COL_WIDTH = 120;  // Increased for better spacing
-    this.ROW_HEIGHT = 30;  // Increased for better spacing
-    this.MIN_DISTANCE = 60;  // Minimum distance between text centers
-    this.FLASHLIGHT_RADIUS = 300;
-    this.LERP_FACTOR = 0.08;
+    // Detect mobile device
+    this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+    
+    // Visual configuration (adjusted for mobile)
+    this.FONT_SIZE = this.isMobile ? 9 : 11;
+    this.COL_WIDTH = this.isMobile ? 140 : 120;
+    this.ROW_HEIGHT = this.isMobile ? 35 : 30;
+    this.MIN_DISTANCE = this.isMobile ? 70 : 60;
+    this.FLASHLIGHT_RADIUS = this.isMobile ? 200 : 300;
+    this.LERP_FACTOR = this.isMobile ? 0.12 : 0.08;
     
     // Real app data vocabulary
     this.DATA_TOKENS = [
@@ -39,16 +42,30 @@ class ClinicalGrid {
     this.handleResize = this.handleResize.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.handleTouchMove = this.handleTouchMove.bind(this);
+    this.handleTouchEnd = this.handleTouchEnd.bind(this);
     this.render = this.render.bind(this);
+    
+    // Performance tracking
+    this.lastFrameTime = Date.now();
+    this.frameCount = 0;
     
     this.init();
   }
   
   init() {
-    // Event listeners - use window for mouse tracking since canvas is behind content
+    // Event listeners - use window for tracking since canvas is behind content
     window.addEventListener('resize', this.handleResize);
-    window.addEventListener('mousemove', this.handleMouseMove);
-    window.addEventListener('mouseleave', this.handleMouseLeave);
+    
+    if (this.isMobile) {
+      // Touch events for mobile
+      window.addEventListener('touchmove', this.handleTouchMove, { passive: true });
+      window.addEventListener('touchend', this.handleTouchEnd);
+    } else {
+      // Mouse events for desktop
+      window.addEventListener('mousemove', this.handleMouseMove);
+      window.addEventListener('mouseleave', this.handleMouseLeave);
+    }
     
     // Initial setup
     setTimeout(() => this.handleResize(), 10);
@@ -128,7 +145,36 @@ class ClinicalGrid {
     this.targetMousePos = { x: -9999, y: -9999 };
   }
   
+  handleTouchMove(e) {
+    if (e.touches.length > 0) {
+      const touch = e.touches[0];
+      this.targetMousePos = {
+        x: touch.clientX,
+        y: touch.clientY
+      };
+    }
+  }
+  
+  handleTouchEnd() {
+    // Keep the last position for a moment, then fade away
+    setTimeout(() => {
+      this.targetMousePos = { x: -9999, y: -9999 };
+    }, 500);
+  }
+  
   render() {
+    // Frame rate throttling for mobile performance
+    const now = Date.now();
+    if (this.isMobile) {
+      // Limit to 30fps on mobile
+      const elapsed = now - this.lastFrameTime;
+      if (elapsed < 33) {
+        this.animationFrameId = requestAnimationFrame(this.render);
+        return;
+      }
+      this.lastFrameTime = now;
+    }
+    
     // Interpolate mouse (fluid feel)
     const dx = this.targetMousePos.x - this.currentMousePos.x;
     const dy = this.targetMousePos.y - this.currentMousePos.y;
@@ -223,8 +269,15 @@ class ClinicalGrid {
   
   destroy() {
     window.removeEventListener('resize', this.handleResize);
-    window.removeEventListener('mousemove', this.handleMouseMove);
-    window.removeEventListener('mouseleave', this.handleMouseLeave);
+    
+    if (this.isMobile) {
+      window.removeEventListener('touchmove', this.handleTouchMove);
+      window.removeEventListener('touchend', this.handleTouchEnd);
+    } else {
+      window.removeEventListener('mousemove', this.handleMouseMove);
+      window.removeEventListener('mouseleave', this.handleMouseLeave);
+    }
+    
     cancelAnimationFrame(this.animationFrameId);
   }
 }
